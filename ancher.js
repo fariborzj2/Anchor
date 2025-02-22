@@ -1,3 +1,11 @@
+/**
+ * Anchor JS
+ * @version 1.0.1
+ * @author Fariborz Jafarzadeh
+ * @license MIT
+ * @email fariborzj2@gmail.com
+ */
+
 class Anchor {
   constructor(listSelector, options) {
     this.list = document.querySelector(listSelector);
