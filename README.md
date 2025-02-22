@@ -69,9 +69,36 @@ const options = {
 const anchor = new Anchor('#anchor-list', options);
 ```
 
+### options
+| Option              | Type   | Default         | Description                                                                                   |
+| ------------------- | ------ | --------------- | --------------------------------------------------------------------------------------------- |
+| `contentClass`      | String | `'content'`     | Class of the container where headings are located.                                          |
+| `activeClass`       | String | `'active'`      | Class applied to the active menu item.                                                        |
+| `headClass`         | String | `'highlight'`   | Class applied to the active heading.                                                          |
+| `listHead`          | Array  | `['h1', 'h2']`  | Headings to include in the navigation menu.                                                   |
+| `defaultFontSize`   | Object | `{}`            | Default font sizes for headings (e.g., `{ h1: '24px', h2: '20px' }`).                           |
+| `defaultFontWeight` | Object | `{}`            | Default font weights for headings (e.g., `{ h1: 'bold', h2: 'normal' }`).                      |
+| `offsetTop`         | Number | `100`           | Offset for scroll positioning (in pixels).                                                    |
+
+
+### Contributing
+
+Contributions are welcome! If you'd like to contribute to Anchor JS, please follow these steps:
+
+1. Fork the repository.
+
+2. Create a new branch (git checkout -b feature/YourFeatureName).
+
+3. Commit your changes (git commit -m 'Add some feature').
+
+4. Push to the branch (git push origin feature/YourFeatureName).
+
+5. Open a pull request.
+
+Please ensure your code follows the project's coding standards and includes appropriate tests.
+
 ### Customization
 You can customize the behavior of Anchor JS by passing different options during initialization. Refer to the Options section for more details.
-
 
 ## License
 
