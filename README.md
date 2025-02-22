@@ -49,7 +49,7 @@ Add the following script tag to your HTML file:
 ```
 
 2. Initialize Anchor JS:
-```html
+```js
 const options = {
   contentClass: 'content', // Class of the content container
   activeClass: 'active',   // Class for the active menu item
