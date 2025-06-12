@@ -16,7 +16,8 @@ class Anchor {
     this.defaultFontSize = options.defaultFontSize || {};
     this.defaultFontWeight = options.defaultFontWeight || {};
     this.offsetTop = options.offsetTop || 100;
-  
+
+    this.core = new AnchorCore(options);
     this.init();
   }
   
@@ -26,11 +27,10 @@ class Anchor {
   
     headings.forEach((heading, index) => {
       const headingTag = heading.tagName.toLowerCase();
-      const headingId = `heading-${index + 1}`;
+      const headingId = this.core.generateHeadingId(index);
       heading.setAttribute('id', headingId);
   
-      const fontSize = this.defaultFontSize[headingTag] || '14px';
-      const fontWeight = this.defaultFontWeight[headingTag] || 'normal';
+      const styles = this.core.getHeadingStyles(headingTag);
   
       const listItem = document.createElement('li');
       const anchorLink = document.createElement('a');
@@ -38,8 +38,8 @@ class Anchor {
       anchorLink.classList.add('anchor-link');
   
       const span = document.createElement('span');
-      span.style.fontWeight = fontWeight;
-      span.style.fontSize = fontSize;
+      span.style.fontWeight = styles.fontWeight;
+      span.style.fontSize = styles.fontSize;
       span.textContent = heading.textContent;
   
       anchorLink.appendChild(span);
@@ -53,34 +53,38 @@ class Anchor {
   
   bindScroll() {
     const contentElement = document.querySelector(`.${this.contentClass}`);
-    const headings = contentElement.querySelectorAll(this.listHead.join(','));
+    const headings = Array.from(contentElement.querySelectorAll(this.listHead.join(','))).map(h => ({
+      id: h.getAttribute('id'),
+      offsetTop: h.getBoundingClientRect().top + window.scrollY
+    }));
   
     window.addEventListener('scroll', () => {
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const activeHeadingId = this.core.getActiveHeading(scrollTop, headings);
   
-      headings.forEach((heading) => {
-        const headingId = heading.getAttribute('id');
-        const offsetTop = heading.getBoundingClientRect().top + scrollTop - this.offsetTop;
-  
-        if (scrollTop >= offsetTop) {
-          // Remove active class from all list items
-          this.list.querySelectorAll('li').forEach((li) => {
-            li.classList.remove(this.activeClass);
-          });
-  
-          // Add active class to the current list item
-          const currentLink = this.list.querySelector(`a[href="#${headingId}"]`);
-          if (currentLink && currentLink.parentElement) {
-            currentLink.parentElement.classList.add(this.activeClass);
-          }
-  
-          // Remove head class from all headings
-          headings.forEach((h) => h.classList.remove(this.headClass));
-  
-          // Add head class to the current heading
-          heading.classList.add(this.headClass);
-        }
+      // Remove active class from all list items
+      this.list.querySelectorAll('li').forEach((li) => {
+        li.classList.remove(this.activeClass);
       });
+  
+      // Add active class to the current list item
+      if (activeHeadingId) {
+        const currentLink = this.list.querySelector(`a[href="#${activeHeadingId}"]`);
+        if (currentLink && currentLink.parentElement) {
+          currentLink.parentElement.classList.add(this.activeClass);
+        }
+      }
+  
+      // Remove head class from all headings
+      contentElement.querySelectorAll(this.listHead.join(',')).forEach((h) => h.classList.remove(this.headClass));
+  
+      // Add head class to the current heading
+      if (activeHeadingId) {
+        const activeHeadingElement = document.getElementById(activeHeadingId);
+        if (activeHeadingElement) {
+          activeHeadingElement.classList.add(this.headClass);
+        }
+      }
     });
   }
   

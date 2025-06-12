@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AnchorVue JS Demo</title>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src="./anchor-core.js"></script>
+  <!-- AnchorVue.vue will be loaded as a component -->
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+      color: #333;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      display: flex;
+      gap: 20px;
+    }
+
+    .content {
+      flex: 3;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    #anchor-nav { /* Changed ID to avoid conflict if original demo is on same page */
+      flex: 1;
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 20px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    /* Component's own styles will take care of list items */
+
+    h1, h2, h3, h4, h5, h6 { /* Added h4,h5,h6 for completeness if used */
+      margin-top: 30px;
+    }
+    .highlight { /* Style for the headClass */
+      color: #007bff;
+    }
+
+    /* Styles from AnchorVue.js (formerly AnchorVue.vue scoped styles) */
+    #anchor-list-vue-js ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    #anchor-list-vue-js li {
+      margin: 10px 0;
+    }
+
+    #anchor-list-vue-js a {
+      text-decoration: none;
+      color: #333;
+      font-size: 14px;
+      transition: color 0.3s ease;
+    }
+
+    #anchor-list-vue-js a:hover {
+      color: #007bff;
+    }
+
+    #anchor-list-vue-js li.active a { /* Tied to activeClass prop's default ('active') */
+      color: #007bff;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="app" class="container">
+    <!-- Navigation Menu -->
+    <div id="anchor-nav">
+      <anchor-vue
+        content-selector=".content"
+        active-class="active"
+        head-class="highlight"
+        :list-head="['h1', 'h2', 'h3']"
+        :default-font-size="{ h1: '18px', h2: '16px', h3: '14px' }"
+        :default-font-weight="{ h1: 'bold', h2: 'normal', h3: 'normal' }"
+        :offset-top="120">
+      </anchor-vue>
+    </div>
+
+    <!-- Page Content -->
+    <div class="content">
+      <h1>Section 1</h1>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <p>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+
+      <h2>Subsection 1.1</h2>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+      <h3>Subsection 1.1.1</h3>
+      <p>Phasellus egestas tellus rutrum tellus pellentesque eu. Tincidunt dui ut ornare lectus sit amet est placerat in.</p>
+      <p>Pulvinar elementum integer enim neque volutpat ac tincidunt vitae.</p>
+
+      <h1>Section 2</h1>
+      <p>Massa tincidunt dui ut ornare lectus sit. Augue neque gravida in fermentum et sollicitudin ac orci phasellus.</p>
+      <p>Elementum curabitur vitae nunc sed velit dignissim sodales ut eu. Nibh praesent tristique magna sit amet purus.</p>
+
+      <h2>Subsection 2.1</h2>
+      <p>Adipiscing elit duis tristique sollicitudin nibh sit amet commodo nulla. Lectus proin nibh nisl condimentum id venenatis.</p>
+      <p>Quis lectus nulla at volutpat diam ut venenatis tellus in. Mauris pharetra et ultrices neque ornare aenean euismod.</p>
+
+      <h3>Subsection 2.1.1</h3>
+      <p>Eu sem integer vitae justo eget magna fermentum iaculis eu. Faucibus purus in massa tempor nec feugiat nisl.</p>
+      <p>Imperdiet sed euismod nisi porta lorem mollis aliquam ut porttitor. Diam phasellus vestibulum lorem sed risus ultricies.</p>
+
+      <h1>Section 3</h1>
+      <p>Consequat mauris nunc congue nisi vitae suscipit tellus mauris a. Semper auctor neque vitae tempus quam.</p>
+      <p>Mollis nunc sed id semper risus in hendrerit gravida. Sit amet consectetur adipiscing elit pellentesque.</p>
+    </div>
+  </div>
+
+  <script src="./AnchorVue.js"></script>
+  <script>
+    // AnchorVue.js should define AnchorVueComponent globally or on window
+    // For example, if AnchorVue.js defines: const AnchorVueComponent = { ... }; window.AnchorVueComponent = AnchorVueComponent;
+    // Or it's simply available if not using modules.
+
+    const app = Vue.createApp({
+      // Components are registered globally before mounting the app
+    });
+
+    // Register the component globally
+    // AnchorVueComponent should be accessible here, e.g. as window.AnchorVueComponent if set by AnchorVue.js,
+    // or directly if AnchorVue.js was not a module and declared it in the global scope.
+    // Let's assume AnchorVue.js makes AnchorVueComponent available globally.
+    app.component('anchor-vue', AnchorVueComponent);
+
+    app.mount('#app');
+  </script>
+</body>
+</html>
